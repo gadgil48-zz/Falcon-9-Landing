@@ -1,0 +1,200 @@
+{
+	"kind": "metapackage",
+	"abstract": "A list of modules installed on the default KSP instance",
+	"name": "installed-default",
+	"license": "unknown",
+	"version": "2017.01.23.09.53.20",
+	"identifier": "installed-default",
+	"spec_version": "v1.6",
+	"recommends": [
+		{
+			"name": "RealismOverhaul"
+		},
+		{
+			"name": "ConnectedLivingSpace"
+		},
+		{
+			"name": "DeadlyReentry"
+		},
+		{
+			"name": "HangarExtender"
+		},
+		{
+			"name": "KSP-AVC"
+		},
+		{
+			"name": "MechJeb2"
+		},
+		{
+			"name": "ProceduralFairings"
+		},
+		{
+			"name": "ProceduralFairings-ForEverything"
+		},
+		{
+			"name": "ProceduralParts"
+		},
+		{
+			"name": "PersistentRotation"
+		},
+		{
+			"name": "RCSBuildAid"
+		},
+		{
+			"name": "KSCSwitcher"
+		},
+		{
+			"name": "RemoteTech"
+		},
+		{
+			"name": "TACLS-Config-RealismOverhaul"
+		},
+		{
+			"name": "TextureReplacer"
+		},
+		{
+			"name": "Toolbar"
+		},
+		{
+			"name": "EngineLighting"
+		},
+		{
+			"name": "NearFutureSolar"
+		},
+		{
+			"name": "AdvancedJetEngine"
+		},
+		{
+			"name": "FerramAerospaceResearch"
+		},
+		{
+			"name": "ModuleManager"
+		},
+		{
+			"name": "ModularFlightIntegrator"
+		},
+		{
+			"name": "SolverEngines"
+		},
+		{
+			"name": "KerbalJointReinforcement"
+		},
+		{
+			"name": "RealChute"
+		},
+		{
+			"name": "CommunityResourcePack"
+		},
+		{
+			"name": "RealHeat"
+		},
+		{
+			"name": "SmokeScreen"
+		},
+		{
+			"name": "FirespitterCore"
+		},
+		{
+			"name": "NearFutureSolar-Core"
+		},
+		{
+			"name": "Scatterer-sunflare"
+		},
+		{
+			"name": "HyperEdit"
+		},
+		{
+			"name": "kOS"
+		},
+		{
+			"name": "RealSolarSystem"
+		},
+		{
+			"name": "RSSDateTimeFormatter"
+		},
+		{
+			"name": "Kopernicus"
+		},
+		{
+			"name": "Trajectories"
+		},
+		{
+			"name": "KerbalAlarmClock"
+		},
+		{
+			"name": "TriggerAu-Flags"
+		},
+		{
+			"name": "AnimatedDecouplers"
+		},
+		{
+			"name": "TweakScale"
+		},
+		{
+			"name": "BDAnimationModules"
+		},
+		{
+			"name": "ReentryParticleEffect"
+		},
+		{
+			"name": "SpaceXLegs"
+		},
+		{
+			"name": "kRPC"
+		},
+		{
+			"name": "RealFuels"
+		},
+		{
+			"name": "RealPlume"
+		},
+		{
+			"name": "TACLS"
+		},
+		{
+			"name": "RSSTextures4096"
+		},
+		{
+			"name": "HullcamVDSContinued"
+		},
+		{
+			"name": "FMRS"
+		},
+		{
+			"name": "UbioWeldContinued"
+		},
+		{
+			"name": "BDArmoryContinued"
+		},
+		{
+			"name": "RN-USProbesPack"
+		},
+		{
+			"name": "AmbientLightAdjustment"
+		},
+		{
+			"name": "DistantObject"
+		},
+		{
+			"name": "Scatterer"
+		},
+		{
+			"name": "KerbCam-Continued"
+		},
+		{
+			"name": "PlanetShine"
+		},
+		{
+			"name": "RealScaleBoosters"
+		},
+		{
+			"name": "DistantObject-default"
+		},
+		{
+			"name": "PlanetShine-Config-Default"
+		},
+		{
+			"name": "KerbalKonstructs"
+		}
+	]
+}
