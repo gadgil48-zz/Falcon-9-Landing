@@ -21,11 +21,11 @@ ThrottOut = 0.0
 #scaling to account for air resistance
 gravscale = 0.2
 
-Throttle_PID_setpoint = 0.4
+Throttle_PID_setpoint = 0.6
 
 Throttle_PID = PIDLoop.PID(0.0, time.time(), 0.0, ThrottKp, ThrottKi, ThrottKd, Throttle_PID_setpoint, 0.05, 1.0)
 
-def Toggle(in_w, target_offset,h_lim):
+def Toggle(in_w, target_offset,h_lim, bc_lim):
     #similar to Steering_Logic
     while True:
         i = in_w[0]
@@ -49,7 +49,7 @@ def Toggle(in_w, target_offset,h_lim):
             bc = t2b+t2i
 
             #calculation of throttle value
-            if bc>-0.75 and h<h_lim:
+            if bc>bc_lim and h<h_lim:
                 ThrottOut = Throttle_PID.Update(time.time(), -bc)
             else:
                 ThrottOut = 0.0
@@ -58,7 +58,7 @@ def Toggle(in_w, target_offset,h_lim):
                 vessel.control.gear = True
             
             vessel.control.throttle = ThrottOut
-            time.sleep(0.01)
+            time.sleep(0.0025)
         elif(i==False):
             vessel.control.throttle = 0.0
             if((sign*h)>0):

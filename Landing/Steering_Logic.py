@@ -39,7 +39,7 @@ Star = (1,0,0)
 
 #Gain values for 2nd set of PID Loops
 TorTu = 8.0
-TorKu = 5.0
+TorKu = 8.0
 TorKi = numpy.array((0.0,0.0,0.0))
 TorKp = numpy.array((0.0,0.0,0.0))
 TorKd = numpy.array((0.0,0.0,0.0))

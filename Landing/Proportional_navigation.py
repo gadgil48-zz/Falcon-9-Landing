@@ -22,7 +22,7 @@ def Toggle(in_r, target):
     target_position = target.position(target.orbit.body.reference_frame)
     target_position = numpy.asarray(conn.space_center.transform_direction(target_position, target.orbit.body.reference_frame, target.surface_reference_frame))
     #custom value for target position to ensure a trajectory that intercepts the target tail on instead of severe angle
-    target_position[0] += 10000.0-10000.0*numpy.exp(-1.0*vessel.flight(vessel.orbit.body.reference_frame).mean_altitude/30000)
+    target_position[0] += 0.5*vessel.flight(vessel.orbit.body.reference_frame).mean_altitude
     target_position = (target_position[0], target_position[1], target_position[2])
     target_position = conn.space_center.transform_direction(target_position, target.surface_reference_frame, target.orbit.body.reference_frame)
     target_position = numpy.asarray(target_position)
@@ -52,16 +52,19 @@ def Toggle(in_r, target):
     travelling = numpy.multiply(travelling, -1.0)
     error_ang = 180.0*numpy.arctan(numpy.sqrt(travelling[1]*travelling[1] + travelling[2]*travelling[2])/travelling[0])/numpy.pi
     #various modes that can be triggered from Main.py
+    normrv = numpy.linalg.norm(relative_velocity)
+    engine_off = -35.0*((normrv-100.0)/500.0)**1.5
+    engine_on = 15.0*(-numpy.tanh((normrv-200.0)/20.0)-0.9)
     if(mode == 0):
         Target_Vec = numpy.add(numpy.multiply(A_Vec, -50.0), relative_velocity)
     elif(mode == 1):
-        Target_Vec = numpy.add(numpy.multiply(A_Vec, -25.0), relative_velocity)
+        Target_Vec = numpy.add(numpy.multiply(A_Vec, engine_off), relative_velocity)
     elif(mode == 2):
-        Target_Vec = numpy.add(numpy.multiply(A_Vec, 5.0), relative_velocity)
+        Target_Vec = numpy.add(numpy.multiply(A_Vec, engine_on), relative_velocity)
     elif(mode == 3):
         Target_Vec = relative_velocity
     elif(mode == 4):
-        Target_Vec = numpy.add(numpy.multiply(A_Vec, -5.0), relative_velocity)
+        Target_Vec = numpy.add(numpy.multiply(A_Vec, 5.0), relative_velocity)
     
     #actual execution of proportional navigation
     #for more info see https://en.wikipedia.org/wiki/Proportional_navigation

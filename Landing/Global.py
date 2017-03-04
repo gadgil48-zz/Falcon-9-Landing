@@ -10,5 +10,5 @@ vessel = conn.space_center.active_vessel
 
 #change this as required for different launches
 for i in conn.space_center.vessels:
-    if(i.name == 'ASDS-3'):
+    if(i.name == 'LZ-1'):
         target = i

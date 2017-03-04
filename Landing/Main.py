@@ -64,11 +64,11 @@ i = True
 
 q.insert(0,i)
 
-while True:
-    if altitude()>139000:#change this condition depending on trajectory
+'''while True:
+    if altitude()>125000:#change this condition depending on trajectory
         break
-    time.sleep(0.01)
-
+    time.sleep(0.005)
+'''
 #Boost-Back Burn
 br = vessel.orbit.body.equatorial_radius
 
@@ -85,6 +85,7 @@ n_vec = numpy.cross(vespos, tpos)
 n_vec = numpy.divide(n_vec, numpy.linalg.norm(n_vec))
 n_vecp = numpy.cross(vespos,x_1)
 n_vecp = numpy.divide(n_vecp, numpy.linalg.norm(n_vecp))
+
 
 if numpy.dot(n_vec, n_vecp)>=0:
     predir = 1
@@ -144,6 +145,8 @@ while h>60000:
     r_ang = numpy.transpose(r_ang)
     Dir_Bearing = numpy.dot(r_ang, Dir_Bearing)
 
+    #print(deviation)
+
     new_Dir = (Dir_Bearing[0],Dir_Bearing[1], Dir_Bearing[2])
     e.insert(0,new_Dir)
     
@@ -157,23 +160,30 @@ while h>60000:
         vessel.control.rcs = True
     lim = pred.r2d((p_v-t_v)/br)
     #condition to slightly overshoot the target to account for drag and landing maneuvers
-    if lim>0.06 and lim<0.07 and (t_p-t_v)<=0:#change these conditions depending on trajectory
+    if lim>0.05 and lim<0.06 and (t_p-t_v)<=0:#change these conditions depending on trajectory
         vessel.control.throttle = 0.0
-        vessel.control.rcs = True
         break
     
-    time.sleep(0.005)
+    time.sleep(0.0025)
 
 #change SAS to work relative to the surface velocity
 smode1.insert(0, 1)
 Dir = (0.0, -1.0, 0.0)
 e.insert(0,Dir)
 
+while True:
+    if altitude()<=125000 and altitude()>124000:#change this condition depending on trajectory
+        break
+    time.sleep(0.005)
+
+vessel.control.rcs = True
+vessel.control.set_action_group(3, True)
+
 #Re-Entry Burn
 while h<=330000:
     conn.drawing.clear()
     h = altitude() + (vessel.parts.with_name(vessel.parts.engines[0].part.name)[0].position(vessel.reference_frame))[1]
-    if h<=77000:#change this condition depending on trajectory 
+    if h<=54834:#change this condition depending on trajectory 
         SAS.RotPitch.Kd = 0.25
         SAS.RotHeading.Kd = 0.25
         SAS.RotRoll.Kd = 0.25
@@ -182,8 +192,8 @@ while h<=330000:
         SAS.TorKp[1] = 0.45*10.0
         SAS.TorKp[2] = 0.45*10.0*0.25
         SAS.TorKd = numpy.multiply(SAS.TorKp, 10.0)
-        if surface_speed()>=1136.0:#change this condition depending on trajectory 
-            mode = 2
+        if surface_speed()>=497.7:#change this condition depending on trajectory 
+            mode = 4
             Dir = conn.space_center.transform_direction(PN.Toggle(mode, target), vessel.reference_frame, vessel.surface_velocity_reference_frame)
             Dir = numpy.multiply(Dir, 1.0/numpy.linalg.norm(Dir))
             e.insert(0,Dir)
@@ -198,7 +208,7 @@ while h<=330000:
 #Landing Burn
 vessel.control.set_action_group(2, True)    
 
-t = threading.Thread(target = T.Toggle, args=(w, target_offset, 3500))#change 3rd argument depending on trajectory
+t = threading.Thread(target = T.Toggle, args=(w, target_offset, 8000, -1.5))#change 3rd argument depending on trajectory
 t.start()
 
 sign = 0.2
@@ -216,23 +226,28 @@ while (sign*h)<0:
     q.insert(0,i)
 
     #changes the result of the Proportional Navigation module to suit different regimes during descent
-    if h<70000 and h>=10000:
+    if h<70000 and h>=30000:
         mode = 0
         Dir = conn.space_center.transform_direction(PN.Toggle(mode, target), vessel.reference_frame, vessel.surface_velocity_reference_frame)
         Dir = numpy.multiply(Dir, 1.0/numpy.linalg.norm(Dir))
         e.insert(0,Dir)
-    elif h<10000 and h>=300:
-        if numpy.abs(vertical_vel())>=120.0:
+    elif h<30000 and h>=400:
+        if h>=9500.0:
             mode = 1
             Dir = conn.space_center.transform_direction(PN.Toggle(mode, target), vessel.reference_frame, vessel.surface_velocity_reference_frame)
             Dir = numpy.multiply(Dir, 1.0/numpy.linalg.norm(Dir))
             e.insert(0,Dir)
-        if numpy.abs(vertical_vel())<120.0:
+        else:
             mode = 2
             Dir = conn.space_center.transform_direction(PN.Toggle(mode, target), vessel.reference_frame, vessel.surface_velocity_reference_frame)
             Dir = numpy.multiply(Dir, 1.0/numpy.linalg.norm(Dir))
             e.insert(0,Dir)
-    elif h<300:
+        '''if numpy.abs(vertical_vel())<120.0:
+            mode = 1
+            Dir = conn.space_center.transform_direction(PN.Toggle(mode, target), vessel.reference_frame, vessel.surface_velocity_reference_frame)
+            Dir = numpy.multiply(Dir, 1.0/numpy.linalg.norm(Dir))
+            e.insert(0,Dir)'''
+    elif h<400:
         mode = 3
         Dir = conn.space_center.transform_direction(PN.Toggle(mode, target), vessel.reference_frame, vessel.surface_velocity_reference_frame)
         Dir = numpy.multiply(Dir, 1.0/numpy.linalg.norm(Dir))
